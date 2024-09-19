@@ -7,9 +7,11 @@ import SelectControl from './select'
 import CheckboxGroupControl from './checkbox-group'
 import RadioGroupControl from './radio-group'
 import ButtonControl from './button'
+import SubmitControl from './submit'
 import DateControl from './input.date'
 
 export default [
+  SubmitControl,
   ButtonControl,
   DateControl,
   HiddenControl,

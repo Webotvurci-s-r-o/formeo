@@ -11,7 +11,7 @@ const defaultOptions = Object.freeze({
     {
       id: 'common',
       label: 'controls.groups.form',
-      elementOrder: ['button', 'checkbox'],
+      elementOrder: ['submit', 'button', 'checkbox'],
     },
     {
       id: 'html',

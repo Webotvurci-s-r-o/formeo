@@ -1,7 +1,7 @@
 import i18n from 'mi18n'
 import Control from '../control'
 
-class ButtonControl extends Control {
+class SubmitControl extends Control {
   constructor() {
     const buttonConfig = {
       tag: 'button',
@@ -9,21 +9,32 @@ class ButtonControl extends Control {
         className: [{ label: 'grouped', value: 'f-btn-group' }, { label: 'ungrouped', value: 'f-field-group' }],
       },
       config: {
-        label: i18n.get('controls.form.button'),
+        label: i18n.get('controls.form.submit'),
         hideLabel: true,
       },
       meta: {
         group: 'common',
         icon: 'button',
-        id: 'button',
+        id: 'submit',
       },
       options: [
         {
-          label: i18n.get('button'),
-          type: ['button', 'submit', 'reset'].map((buttonType, index) => ({
-            label: buttonType,
-            value: buttonType,
-          })),
+          label: i18n.get('submit'),
+          type: [
+            {
+              label: 'submit',
+              value: 'submit',
+              selected: true,
+            },
+            {
+              label: 'button',
+              value: 'button',
+            },
+            {
+              label: 'reset',
+              value: 'reset',
+            },
+          ],
           className: [
             {
               label: 'default',
@@ -47,11 +58,11 @@ class ButtonControl extends Control {
               value: 'warning',
             },
           ],
-        },
+        }
       ],
     }
     super(buttonConfig)
   }
 }
 
-export default ButtonControl
+export default SubmitControl

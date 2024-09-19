@@ -1,7 +1,7 @@
 import startCase from 'lodash/startCase'
 import lowerCase from 'lodash/lowerCase'
 import i18n from 'mi18n'
-import { orderObjectsBy, indexOfNode } from '../../common/helpers'
+import { orderObjectsBy, indexOfNode, get } from '../../common/helpers'
 import dom from '../../common/dom'
 import animate from '../../common/animation'
 import { CONDITION_INPUT_ORDER, FIELD_PROPERTY_MAP, OPERATORS, ANIMATION_SPEED_BASE } from '../../constants'
@@ -132,6 +132,10 @@ const INPUT_TYPE_ACTION = {
   }),
   array: (dataKey, field) => ({
     change: ({ target: { value } }) => {
+      const originalValue = field.get(dataKey);
+      if (Array.isArray(originalValue)) {
+        value = originalValue.map(option => ({ ...option, selected: value === (option.type ?? option.value) }))
+      }
       field.set(dataKey, value)
       field.updatePreview()
     },

@@ -455,11 +455,24 @@ class DOM {
         },
         button: option => {
           const { type, label, className, id } = option
+          let typeValue;
+          if (Array.isArray(type)) {
+            const selectedType = type.find(selectItem => selectItem.selected) ?? type[0];
+            typeValue = selectedType.type ?? selectedType.value;
+          } else {
+            typeValue = type;
+          }
+          let classNameValue;
+          if (Array.isArray(className)) {
+            classNameValue = (className.find(selectItem => selectItem.selected) ?? className[0]).value ?? '';
+          } else {
+            classNameValue = className;
+          }
           return Object.assign({}, elem, {
             attrs: {
-              type,
+              type: typeValue,
             },
-            className,
+            className: classNameValue,
             id: id || uuid(),
             options: undefined,
             children: label,

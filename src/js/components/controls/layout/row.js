@@ -2,6 +2,7 @@ export const rowControl = {
   config: {
     label: 'row',
     hiddenLabel: true,
+    hideLabel: true,
   },
   meta: {
     group: 'layout',
