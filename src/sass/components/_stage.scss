@@ -11,7 +11,7 @@
 
 .formeo-stage {
   @include breakpoint('phone-lrg') {
-    width: calc(100% - 50px);
+    width: 100%;
   }
   width: 73%;
   box-sizing: border-box;

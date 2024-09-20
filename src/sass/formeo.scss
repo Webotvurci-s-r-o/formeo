@@ -19,6 +19,9 @@
   @include clearfix;
 
   &.formeo-editor {
+    @include breakpoint('phone-lrg') {
+      flex-direction: column;
+    }
     display: flex;
     flex-direction: row;
     text-align: left;
