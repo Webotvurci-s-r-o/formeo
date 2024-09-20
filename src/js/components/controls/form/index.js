@@ -5,6 +5,7 @@ import TextControl from './input.text'
 import FileControl from './input.file'
 import SelectControl from './select'
 import CheckboxGroupControl from './checkbox-group'
+import ConsentCheckboxControl from './consent-checkbox'
 import RadioGroupControl from './radio-group'
 import ButtonControl from './button'
 import SubmitControl from './submit'
@@ -21,5 +22,6 @@ export default [
   FileControl,
   SelectControl,
   CheckboxGroupControl,
+  ConsentCheckboxControl,
   RadioGroupControl,
 ]

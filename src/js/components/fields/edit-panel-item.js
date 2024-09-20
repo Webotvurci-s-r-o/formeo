@@ -439,7 +439,7 @@ export default class EditPanelItem {
     })
 
     inputTypeConfig.attrs = Object.assign({}, inputTypeConfig.attrs, {
-      name: inputTypeConfig.attrs.type === 'checkbox' ? `${name}[]` : name,
+      name: inputTypeConfig.attrs.type === 'checkbox' && (inputTypeConfig?.meta?.multiple ?? true) ? `${name}[]` : name,
       id,
       disabled: this.isDisabled,
       locked: this.isLocked,

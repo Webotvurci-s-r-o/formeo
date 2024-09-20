@@ -28,7 +28,13 @@ export default class EditPanel {
 
   getPanelConfig(data) {
     this.props = this.createProps(data)
-    this.editButtons = this.createEditButtons()
+    const children = [
+      this.props
+    ];
+    if ((this.field.data?.meta?.edit ?? {})[this.name] ?? true) {
+      this.editButtons = this.createEditButtons()
+      children.push(this.editButtons);
+    }
     return {
       id: `${this.field.id}-${this.name}-panel`,
       config: {
@@ -37,7 +43,7 @@ export default class EditPanel {
       attrs: {
         className: `f-panel ${this.name}-panel`,
       },
-      children: [this.props, this.editButtons],
+      children,
     }
   }
 
