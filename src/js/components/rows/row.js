@@ -125,7 +125,7 @@ export default class Row extends Component {
         type: 'text',
         ariaLabel: 'Legend for fieldset',
         value: _this.get('config.legend'),
-        placeholder: 'Legend',
+        placeholder: i18n.get('placeholder.legend'),
       },
       action: {
         input: ({ target: { value } }) => _this.set('config.legend', value),

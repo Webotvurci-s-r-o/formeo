@@ -37,6 +37,10 @@ select {
 
 input {
   @extend %input-style;
+  &[type='file'] {
+    line-height: 1;
+  }
+
   &[type='checkbox'],
   &[type='radio'] {
     width: auto;

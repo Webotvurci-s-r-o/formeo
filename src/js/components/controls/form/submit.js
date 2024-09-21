@@ -6,7 +6,7 @@ class SubmitControl extends Control {
     const buttonConfig = {
       tag: 'button',
       attrs: {
-        className: [{ label: 'grouped', value: 'f-btn-group' }, { label: 'ungrouped', value: 'f-field-group' }],
+        className: [{ label: i18n.get('className.grouped'), value: 'f-btn-group' }, { label: i18n.get('className.ungrouped'), value: 'f-field-group' }],
       },
       config: {
         label: i18n.get('controls.form.submit'),
@@ -22,39 +22,39 @@ class SubmitControl extends Control {
           label: i18n.get('submit'),
           type: [
             {
-              label: 'submit',
+              label: i18n.get('type.submit'),
               value: 'submit',
               selected: true,
             },
             {
-              label: 'button',
+              label: i18n.get('type.button'),
               value: 'button',
             },
             {
-              label: 'reset',
+              label: i18n.get('type.reset'),
               value: 'reset',
             },
           ],
           className: [
             {
-              label: 'default',
+              label: i18n.get('styles.default'),
               value: '',
               selected: true,
             },
             {
-              label: 'primary',
+              label: i18n.get('styles.primary'),
               value: 'primary',
             },
             {
-              label: 'danger',
+              label: i18n.get('styles.danger'),
               value: 'error',
             },
             {
-              label: 'success',
+              label: i18n.get('styles.success'),
               value: 'success',
             },
             {
-              label: 'warning',
+              label: i18n.get('styles.warning'),
               value: 'warning',
             },
           ],

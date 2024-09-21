@@ -60,7 +60,7 @@ const inputConfigBase = ({ key, value, type = 'text', checked }) => {
     attrs: {
       type,
       value,
-      placeholder: i18n.get(`${key}.placeholder`) || startCase(key),
+      placeholder: i18n.get(`placeholder.${key}`) || startCase(key),
     },
     className: key.replace(/\./g, '-'),
     config: {},
