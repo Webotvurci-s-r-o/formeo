@@ -28,7 +28,7 @@ class ConsentCheckboxControl extends Control {
         group: 'common',
         icon: 'checkbox',
         id: 'consent-checkbox',
-        multiple: true,
+        multiple: false,
         edit: {
           options: false,
         },
