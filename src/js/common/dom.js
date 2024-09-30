@@ -399,6 +399,7 @@ class DOM {
 
     const optionMap = (option, i) => {
       const { label, ...rest } = option
+      const required = 'checkbox' === attrs.type ? attrs.required : undefined;
       const defaultInput = () => {
         const input = {
           tag: 'input',
@@ -407,6 +408,7 @@ class DOM {
             type: fieldType,
             value: option.value || '',
             id: `${id}-${i}`,
+            required,
             ...rest,
           },
           action,
@@ -419,7 +421,7 @@ class DOM {
           config: {
             inputWrap: 'form-check',
           },
-          children: option.label,
+          children: [option.label, required && this.requiredMark()],
         }
         const inputWrap = {
           children: [input, optionLabel],
