@@ -14,7 +14,7 @@ export default defineConfig({
     })
   ],
   build: {
-    // minify: false,
+    minify: false,
     sourcemap: true,
     lib: {
       entry: resolve(__dirname, 'src/js/index.js'),
