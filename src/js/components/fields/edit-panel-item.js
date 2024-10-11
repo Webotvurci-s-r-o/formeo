@@ -43,7 +43,7 @@ const createOptions = (fieldVal, selected) => {
         option.attrs.selected = true
       }
 
-      acc.push(dom.create(option))
+      acc.push(dom.create(option, true))
     }
     return acc
   }, [])

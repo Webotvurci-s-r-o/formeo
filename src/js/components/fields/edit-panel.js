@@ -71,7 +71,7 @@ export default class EditPanel {
       content: this.editPanelItems,
     }
 
-    return dom.create(editGroupConfig)
+    return dom.create(editGroupConfig, true)
   }
 
   /**

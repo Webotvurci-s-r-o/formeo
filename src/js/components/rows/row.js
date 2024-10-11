@@ -41,7 +41,7 @@ export default class Row extends Component {
       },
       id: this.id,
       content: [this.getActionButtons(), this.editWindow, children],
-    })
+    }, true)
 
     this.sortable = Sortable.create(children, {
       animation: 150,
@@ -157,7 +157,7 @@ export default class Row extends Component {
     }
     const columnSettingsPreset = dom.formGroup([columnSettingsPresetLabel, columnSettingsPresetSelect], 'row')
 
-    editWindow.children = [inputGroupInput, dom.create('hr'), fieldSetControls, dom.create('hr'), columnSettingsPreset]
+    editWindow.children = [inputGroupInput, dom.create('hr', true), fieldSetControls, dom.create('hr', true), columnSettingsPreset]
 
     return editWindow
   }
@@ -210,7 +210,7 @@ export default class Row extends Component {
     const oldColumnPreset = this.dom.querySelector('.column-preset')
     const rowEdit = oldColumnPreset.parentElement
     const columnPresetConfig = this.columnPresetControl(this.id)
-    const newColumnPreset = dom.create(columnPresetConfig)
+    const newColumnPreset = dom.create(columnPresetConfig, true)
 
     rowEdit.replaceChild(newColumnPreset, oldColumnPreset)
     return columnPresetConfig

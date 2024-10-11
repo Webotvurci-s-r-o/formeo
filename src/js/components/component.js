@@ -595,5 +595,5 @@ export default class Component extends Data {
         className: 'children',
       },
       children,
-    })
+    }, true)
 }

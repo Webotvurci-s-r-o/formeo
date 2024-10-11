@@ -30,7 +30,7 @@ export const insertScript = src => {
         },
         error: () => reject(new Error(`${this.src} failed to load.`)),
       },
-    })
+    }, true)
 
     // Append the script to the DOM
     const el = document.getElementsByTagName('script')[0]
@@ -63,7 +63,7 @@ export const insertStyle = srcs => {
             load: onLoad,
             error: () => reject(new Error(`${this.src} failed to load.`)),
           },
-        })
+        }, true)
 
         document.head.appendChild(styleLink)
       })
@@ -85,7 +85,7 @@ export const insertIcons = resp => {
           hidden: true,
           style: 'display: none;',
         },
-      })
+      }, true)
 
       document.body.insertBefore(iconSpriteWrap, document.body.childNodes[0])
     }

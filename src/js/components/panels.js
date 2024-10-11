@@ -85,7 +85,7 @@ export default class Panels {
     const panelsWrap = dom.create({
       className: 'panels',
       content: this.opts.panels.map(({ config: { label }, ...panel }) => panel),
-    })
+    }, true)
 
     if (this.opts.type === 'field') {
       this.sortableProperties(panelsWrap)
@@ -154,7 +154,7 @@ export default class Panels {
     const [firstLabel] = labels
     firstLabel.className = 'active-tab'
 
-    return dom.create(panelLabels)
+    return dom.create(panelLabels, true)
   }
 
   /**
@@ -203,7 +203,7 @@ export default class Panels {
         className: 'panel-nav',
       },
       content: [prev, this.labels, next],
-    })
+    }, true)
   }
 
   get isTabbed() {

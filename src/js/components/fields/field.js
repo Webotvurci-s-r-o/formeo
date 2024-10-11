@@ -25,8 +25,8 @@ export default class Field extends Component {
   constructor(fieldData = Object.create(null)) {
     super('field', Object.assign({}, DEFAULT_DATA(), fieldData))
 
-    this.label = dom.create(this.labelConfig)
-    this.preview = dom.create(this.fieldPreview())
+    this.label = dom.create(this.labelConfig, true)
+    this.preview = dom.create(this.fieldPreview(), true)
     this.editPanels = []
 
     let field = {
@@ -51,7 +51,7 @@ export default class Field extends Component {
       },
     }
 
-    field = dom.create(field)
+    field = dom.create(field, true)
     this.observe(field)
 
     this.dom = field
@@ -148,7 +148,7 @@ export default class Field extends Component {
     if (!this.label) {
       return null
     }
-    const newLabel = dom.create(this.labelConfig)
+    const newLabel = dom.create(this.labelConfig, true)
     this.label.parentElement.replaceChild(newLabel, this.label)
     this.label = newLabel
   }
@@ -289,7 +289,7 @@ export default class Field extends Component {
           }
 
           if (evt.target.contentEditable) {
-            super.set('content', evt.target.innerHTML)
+            super.set('content', this.data.meta.id === 'custom-html' ? evt.target.value : evt.target.innerHTML)
           }
         },
       },
