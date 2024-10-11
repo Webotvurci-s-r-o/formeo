@@ -53,7 +53,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "yarn run build:icons && yarn run build:formeo && yarn run build:formeo-renderer",
+    "build": "yarn run build:icons && yarn run build:formeo && yarn run build:formeo-renderer && cp distRenderer/formeo-renderer.umd.js dist/",
     "build:formeo-renderer": "vite build -c vite-renderer.config.mjs",
     "build:formeo": "vite build",
     "build:icons": "node ./tools/generate-sprite.mjs",
