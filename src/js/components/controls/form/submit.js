@@ -26,14 +26,6 @@ class SubmitControl extends Control {
               value: 'submit',
               selected: true,
             },
-            {
-              label: i18n.get('type.button'),
-              value: 'button',
-            },
-            {
-              label: i18n.get('type.reset'),
-              value: 'reset',
-            },
           ],
           className: [
             {
