@@ -48,7 +48,8 @@ input {
     margin-right: $half-space;
   }
 
-  &[type='date'] {
+  &[type='date'],
+  &[type='datetime-local'] {
     max-width: 280px;
     display: block;
   }
