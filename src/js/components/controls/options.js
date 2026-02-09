@@ -11,7 +11,7 @@ const defaultOptions = Object.freeze({
     {
       id: 'common',
       label: 'controls.groups.form',
-      elementOrder: ['submit', 'button', 'checkbox'],
+      elementOrder: ['submit', 'button', 'checkbox', 'date-input', 'datetime-input', 'email-input', 'phone-input'],
     },
     {
       id: 'html',
@@ -27,6 +27,6 @@ const defaultOptions = Object.freeze({
   elements: [],
   container: null,
   panels: { displayType: 'slider' },
-})
+});
 
-export default defaultOptions
+export default defaultOptions;

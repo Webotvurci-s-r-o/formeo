@@ -1,5 +1,5 @@
-import i18n from 'mi18n'
-import Control from '../control'
+import i18n from 'mi18n';
+import Control from '../control';
 
 class HiddenControl extends Control {
   constructor() {
@@ -7,6 +7,7 @@ class HiddenControl extends Control {
       tag: 'input',
       attrs: {
         type: 'hidden',
+        name: '',
         value: '',
       },
       config: {
@@ -18,9 +19,9 @@ class HiddenControl extends Control {
         icon: 'hidden',
         id: 'hidden',
       },
-    }
-    super(hiddenInput)
+    };
+    super(hiddenInput);
   }
 }
 
-export default HiddenControl
+export default HiddenControl;
