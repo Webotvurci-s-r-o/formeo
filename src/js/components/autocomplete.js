@@ -188,16 +188,16 @@ export default class Autocomplete {
         value: this.label || this.value,
         placeholder: i18n.get(`${this.i18nKey}.${this.key}.placeholder`),
       },
-    })
+    }, true)
     this.hiddenField = dom.create({
       tag: 'input',
       attrs: { type: 'hidden', className: this.className, value: this.value },
-    })
+    }, true)
 
     this.list = dom.create({
       tag: 'ul',
       attrs: { className: `${BASE_NAME}-list` },
-    })
+    }, true)
 
     this.dom = dom.create({
       children: [this.displayField, this.hiddenField, this.list],
@@ -212,7 +212,7 @@ export default class Autocomplete {
           this.updateOptions()
         },
       },
-    })
+    }, true)
 
     return this.dom
   }
@@ -265,7 +265,7 @@ export default class Autocomplete {
           },
         },
       }
-      return dom.create(optionConfig)
+      return dom.create(optionConfig, true)
     })
 
     return optionsCache

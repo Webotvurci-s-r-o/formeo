@@ -43,7 +43,7 @@ class DOM {
    * @param  {Object|String} elem
    * @return {Object} valid element object
    */
-  processTagName(elem) {
+  processTagName(elem, isEditor) {
     let tagName
     if (typeof elem === 'string') {
       tagName = elem
@@ -62,7 +62,7 @@ class DOM {
       elem.attrs = restAttrs
     }
 
-    elem.tag = tagName || elem.tag || 'div'
+    elem.tag = tagName || (isEditor && elem.tagEditor) || elem.tag || 'div'
 
     return elem
   }
@@ -71,23 +71,23 @@ class DOM {
    * Wraps dom.create to modify data
    * Used when rendering components in form- not editor
    */
-  render = elem => {
+  render = (elem, isEditor) => {
     elem.id = `f-${elem.id || uuid()}`
-    return this.create(elem)
+    return this.create(elem, isEditor)
   }
 
   /**
    * Creates DOM elements
    * @param  {Object}  elem      element config object
-   * @param  {Boolean} isPreview generating element for preview or render?
+   * @param  {Boolean} isEditor generating element for preview or render?
    * @return {Object}            DOM Object
    */
-  create = (elem, isPreview = false) => {
+  create = (elem, isEditor) => {
     if (!elem) {
       return
     }
 
-    elem = this.processTagName(elem)
+    elem = this.processTagName(elem, isEditor)
     const _this = this
     let childType
     const { tag } = elem
@@ -108,10 +108,14 @@ class DOM {
      */
     const appendChildren = {
       string: children => {
-        element.innerHTML += children
+        if (false === isEditor && 'custom-html' === elem.meta?.id) {
+          element.innerHTML += this.parsedHtml(children)
+        } else {
+          element.innerHTML += children
+        }
       },
       object: children => {
-        return children && element.appendChild(_this.create(children, isPreview))
+        return children && element.appendChild(_this.create(children, isEditor))
       },
       node: children => {
         return element.appendChild(children)
@@ -146,27 +150,27 @@ class DOM {
     // Append Element Content
     if (elem.options) {
       let { options } = elem
-      options = this.processOptions(options, elem, isPreview)
+      options = this.processOptions(options, elem, isEditor)
       if (this.holdsContent(element) && tag !== 'button') {
         // mainly used for <select> tag
         appendChildren.array.call(this, options)
         delete elem.content
       } else {
         h.forEach(options, option => {
-          wrap.children.push(_this.create(option, isPreview))
+          wrap.children.push(_this.create(option, isEditor))
         })
         if (elem.attrs.className) {
           wrap.className = elem.attrs.className
         }
         wrap.config = Object.assign({}, elem.config)
-        return this.create(wrap, isPreview)
+        return this.create(wrap, isEditor)
       }
       processed.push('options')
     }
 
     // Set element attributes
     if (elem.attrs) {
-      _this.processAttrs(elem, element, isPreview)
+      _this.processAttrs(elem, element, isEditor)
       processed.push('attrs')
     }
 
@@ -174,7 +178,7 @@ class DOM {
       if (
         elem.config.label &&
         ((elem.config.label && tag !== 'button') || ['radio', 'checkbox'].includes(h.get(elem, 'attrs.type'))) &&
-        !isPreview
+        !isEditor
       ) {
         const label = _this.label(elem)
 
@@ -220,7 +224,7 @@ class DOM {
     }
 
     if (wrap.children.length) {
-      element = this.create(wrap)
+      element = this.create(wrap, isEditor)
     }
 
     return element
@@ -399,6 +403,7 @@ class DOM {
 
     const optionMap = (option, i) => {
       const { label, ...rest } = option
+      const required = 'checkbox' === attrs.type ? attrs.required : undefined;
       const defaultInput = () => {
         const input = {
           tag: 'input',
@@ -407,6 +412,7 @@ class DOM {
             type: fieldType,
             value: option.value || '',
             id: `${id}-${i}`,
+            required,
             ...rest,
           },
           action,
@@ -419,7 +425,7 @@ class DOM {
           config: {
             inputWrap: 'form-check',
           },
-          children: option.label,
+          children: [option.label, required && this.requiredMark()],
         }
         const inputWrap = {
           children: [input, optionLabel],
@@ -455,11 +461,24 @@ class DOM {
         },
         button: option => {
           const { type, label, className, id } = option
+          let typeValue;
+          if (Array.isArray(type)) {
+            const selectedType = type.find(selectItem => selectItem.selected) ?? type[0];
+            typeValue = selectedType.type ?? selectedType.value;
+          } else {
+            typeValue = type;
+          }
+          let classNameValue;
+          if (Array.isArray(className)) {
+            classNameValue = (className.find(selectItem => selectItem.selected) ?? className[0]).value ?? '';
+          } else {
+            classNameValue = className;
+          }
           return Object.assign({}, elem, {
             attrs: {
-              type,
+              type: typeValue,
             },
-            className,
+            className: classNameValue,
             id: id || uuid(),
             options: undefined,
             children: label,

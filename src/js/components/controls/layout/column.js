@@ -2,6 +2,7 @@ export const columnControl = {
   config: {
     label: 'column',
     hiddenLabel: true,
+    hideLabel: true,
   },
   meta: {
     group: 'layout',

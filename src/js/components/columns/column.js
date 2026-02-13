@@ -62,7 +62,7 @@ export default class Column extends Component {
       },
       id: this.id,
       content: [this.getActionButtons(), DOM_CONFIGS.editWindow(), DOM_CONFIGS.resizeHandle(), children],
-    })
+    }, true)
 
     this.processConfig(this.dom)
 

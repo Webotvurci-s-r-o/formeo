@@ -1,8 +1,10 @@
+_backup
 node_modules
 npm-debug.log
 demo
 !src/demo
 dist
+distRenderer
 yarn-error.log
 .idea
 .vscode

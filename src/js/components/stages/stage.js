@@ -70,7 +70,7 @@ export default class Stage extends Component {
         id: this.id,
       },
       children,
-    })
+    }, true)
 
     this.sortable = Sortable.create(children, {
       animation: 150,

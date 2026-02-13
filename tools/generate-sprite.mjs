@@ -1,6 +1,10 @@
-import fs from 'fs-extra'
+import fs from 'fs'
 import path from 'path'
 import SVGSpriter from 'svg-sprite'
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url) // get the resolved path to the file
+const __dirname = path.dirname(__filename) // get the name of the directory
 
 // Create a sprite from a directory of svg files.
 
@@ -17,10 +21,14 @@ function generateSprite() {
   const iconPaths = fs
     .readdirSync(srcDir)
     .filter(isSvg)
-    .map(filename => `${srcDir}/${filename}`)
+    .map(filename => ({
+      file: `${srcDir}/${filename}`,
+      name: filename,
+    }))
 
   const spriteConfig = {
     dest: outputDir,
+    log: 'info',
     shape: {
       id: {
         generator: name => name.replace(/^icon-(.*)\.svg$/, `${prefix}-${iconDelim}-$1`),
@@ -29,15 +37,19 @@ function generateSprite() {
         {
           svgo: {
             plugins: [
-              { cleanupAttrs: true },
-              { removeDimensions: true },
-              { removeTitle: true },
-              { removeUselessDefs: true },
-              { mergePaths: true },
-              { removeStyleElement: true },
-              { removeNonInheritableGroupAttrs: true },
+              { name: 'preset-default' },
+              { name: 'cleanupAttrs' },
+              { name: 'removeDimensions' },
+              { name: 'removeTitle' },
+              { name: 'removeUselessDefs' },
+              { name: 'mergePaths' },
+              { name: 'removeStyleElement' },
+              { name: 'removeNonInheritableGroupAttrs' },
               {
-                removeAttrs: { attrs: '(stroke|fill|style|^font-*)' },
+                name: 'removeAttrs',
+                params: {
+                  attrs: '(stroke|fill|style|^font-*)',
+                },
               },
             ],
           },
@@ -53,7 +65,7 @@ function generateSprite() {
   const spriter = new SVGSpriter(spriteConfig)
 
   iconPaths.forEach(iconPath => {
-    spriter.add(iconPath, null, fs.readFileSync(iconPath, { encoding: 'utf-8' }))
+    spriter.add(iconPath.file, iconPath.name, fs.readFileSync(iconPath.file, 'utf-8'))
   })
 
   // Compile the sprite
@@ -61,9 +73,9 @@ function generateSprite() {
     if (error) {
       throw new Error(error)
     }
-    fs.mkdirpSync(outputDir)
+    fs.mkdirSync(outputDir, { recursive: true });
     fs.writeFileSync(outputDir + spriteName, result.symbol.sprite.contents)
   })
 }
 
-generateSprite()
+generateSprite();

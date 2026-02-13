@@ -85,7 +85,7 @@ export class Controls {
         className: ['field-control', `${meta.group}-control`, `${meta.id}-control`],
         content: button,
         meta: meta,
-      })
+      }, true)
 
       return control.dom
     })
@@ -256,7 +256,7 @@ export class Controls {
     const groupsWrap = dom.create({
       className: groupsWrapClasses,
       content: [this.panels.panelNav, this.panels.panelsWrap],
-    })
+    }, true)
 
     let controlClass = 'formeo-controls'
     if (sticky) {
@@ -266,7 +266,7 @@ export class Controls {
     const element = dom.create({
       className: controlClass,
       content: [groupsWrap, formActions],
-    })
+    }, true)
     const groups = element.getElementsByClassName('control-group')
 
     this.dom = element
@@ -294,7 +294,7 @@ export class Controls {
               tag: 'h5',
               className: 'filtered-term',
               content: filteredStr,
-            })
+            }, true)
             groupsWrap.insertBefore(filteredTerm, groupsWrap.firstChild)
           }
         } else if (filteredTerm) {

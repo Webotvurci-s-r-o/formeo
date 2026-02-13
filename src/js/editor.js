@@ -52,8 +52,8 @@ export class FormeoEditor {
   get formData() {
     return this.Components.formData
   }
-  set formData(data = {}) {
-    return this.load({ ...this.userFormData, ...data }, this.opts)
+  set formData(data) {
+    return this.load({ ...this.userFormData, ...(data ?? {}) }, this.opts)
   }
   get json() {
     return this.Components.json
@@ -133,7 +133,7 @@ export class FormeoEditor {
       dom.dir = i18n.current.dir
     }
 
-    this.editor = dom.create(elemConfig)
+    this.editor = dom.create(elemConfig, true)
 
     const controlsContainer = this.controls.container || this.editor
     controlsContainer.appendChild(this.controls.dom)

@@ -1,8 +1,8 @@
 import mi18n from 'mi18n'
+import { enUS } from 'formeo-i18n'
 import { isIE } from './common/helpers'
 
-// eslint-disable-next-line no-undef
-mi18n.addLanguage('en-US', EN_US)
+mi18n.addLanguage('en-US', JSON.stringify(enUS))
 
 export const defaults = {
   get editor() {

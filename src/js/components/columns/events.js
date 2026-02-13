@@ -121,7 +121,7 @@ export const setCustomWidthValue = (row, rowWidth) => {
       value,
     },
     content,
-  })
+  }, true)
 
   columnPreset.add(newCustomOption)
   columnPreset.value = value

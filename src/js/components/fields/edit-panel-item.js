@@ -1,7 +1,7 @@
 import startCase from 'lodash/startCase'
 import lowerCase from 'lodash/lowerCase'
 import i18n from 'mi18n'
-import { orderObjectsBy, indexOfNode } from '../../common/helpers'
+import { orderObjectsBy, indexOfNode, get } from '../../common/helpers'
 import dom from '../../common/dom'
 import animate from '../../common/animation'
 import { CONDITION_INPUT_ORDER, FIELD_PROPERTY_MAP, OPERATORS, ANIMATION_SPEED_BASE } from '../../constants'
@@ -43,7 +43,7 @@ const createOptions = (fieldVal, selected) => {
         option.attrs.selected = true
       }
 
-      acc.push(dom.create(option))
+      acc.push(dom.create(option, true))
     }
     return acc
   }, [])
@@ -60,7 +60,7 @@ const inputConfigBase = ({ key, value, type = 'text', checked }) => {
     attrs: {
       type,
       value,
-      placeholder: i18n.get(`${key}.placeholder`) || startCase(key),
+      placeholder: i18n.get(`placeholder.${key}`) || startCase(key),
     },
     className: key.replace(/\./g, '-'),
     config: {},
@@ -132,6 +132,10 @@ const INPUT_TYPE_ACTION = {
   }),
   array: (dataKey, field) => ({
     change: ({ target: { value } }) => {
+      const originalValue = field.get(dataKey);
+      if (Array.isArray(originalValue)) {
+        value = originalValue.map(option => ({ ...option, selected: value === (option.type ?? option.value) }))
+      }
       field.set(dataKey, value)
       field.updatePreview()
     },
@@ -435,7 +439,7 @@ export default class EditPanelItem {
     })
 
     inputTypeConfig.attrs = Object.assign({}, inputTypeConfig.attrs, {
-      name: inputTypeConfig.attrs.type === 'checkbox' ? `${name}[]` : name,
+      name: inputTypeConfig.attrs.type === 'checkbox' && (inputTypeConfig?.meta?.multiple ?? true) ? `${name}[]` : name,
       id,
       disabled: this.isDisabled,
       locked: this.isLocked,

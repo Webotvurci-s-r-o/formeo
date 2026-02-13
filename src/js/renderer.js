@@ -32,7 +32,7 @@ const createRemoveButton = () =>
         mouseleave: ({ target }) => target.parentElement.classList.remove('will-remove'),
         click: ({ target }) => target.parentElement.remove(),
       },
-    })
+    }), true
   )
 
 export default class FormeoRenderer {
@@ -58,7 +58,7 @@ export default class FormeoRenderer {
       children: this.processedData,
     }
 
-    this.renderedForm = dom.render(config)
+    this.renderedForm = dom.render(config, false)
     dom.empty(this.container)
 
     this.applyConditions()
@@ -143,12 +143,12 @@ export default class FormeoRenderer {
       action: {
         click: e => {
           const fInputGroup = e.target.parentElement
-          const elem = dom.render(this.cloneComponentData(id))
+          const elem = dom.render(this.cloneComponentData(id), true)
           fInputGroup.insertBefore(elem, fInputGroup.lastChild)
           elem.appendChild(createRemoveButton())
         },
       },
-    })
+    }, true)
 
   processColumns = rowId => {
     return this.orderChildren('columns', this.form.rows[rowId].children).map(column =>
@@ -166,7 +166,7 @@ export default class FormeoRenderer {
     return Object.values(this.form.stages).map(stage => {
       stage.children = this.processRows(stage.id)
       stage.className = STAGE_CLASSNAME
-      return dom.render(stage)
+      return dom.render(stage, false)
     })
   }
 

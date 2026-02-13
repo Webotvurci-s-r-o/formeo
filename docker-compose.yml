@@ -1,0 +1,10 @@
+services:
+  frontend:
+    container_name: 'formeo_frontend'
+    image: node:lts
+    platform: linux/amd64
+    command: 'tail -f /dev/null'
+    tty: true
+    working_dir: /var/www/app
+    volumes:
+      - .:/var/www/app
