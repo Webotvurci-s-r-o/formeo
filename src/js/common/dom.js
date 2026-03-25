@@ -403,7 +403,8 @@ class DOM {
 
     const optionMap = (option, i) => {
       const { label, ...rest } = option
-      const required = 'checkbox' === attrs.type ? attrs.required : undefined;
+      const isRequiredCheckbox = 'checkbox' === attrs.type && attrs.required
+      const required = isRequiredCheckbox ? true : undefined
       const defaultInput = () => {
         const input = {
           tag: 'input',
@@ -415,7 +416,15 @@ class DOM {
             required,
             ...rest,
           },
-          action,
+          action: Object.assign({}, action),
+        }
+        if (isRequiredCheckbox) {
+          input.action.change = evt => {
+            const form = evt.target.closest('form') || evt.target.getRootNode()
+            const siblings = form.querySelectorAll(`input[type="checkbox"][name="${id}"]`)
+            const anyChecked = Array.from(siblings).some(cb => cb.checked)
+            siblings.forEach(cb => { cb.required = !anyChecked })
+          }
         }
         const optionLabel = {
           tag: 'label',
@@ -425,7 +434,7 @@ class DOM {
           config: {
             inputWrap: 'form-check',
           },
-          children: [option.label, required && this.requiredMark()],
+          children: [option.label],
         }
         const inputWrap = {
           children: [input, optionLabel],
