@@ -10,3 +10,6 @@ yarn-error.log
 .vscode
 .DS_Store
 .yarn.lock
+
+# to see editor in browser
+index.html
